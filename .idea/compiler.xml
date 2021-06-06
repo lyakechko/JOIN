@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="People_Address" />
+        <module name="JOIN_MANY_TO_MANY" />
       </profile>
     </annotationProcessing>
   </component>
