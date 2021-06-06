@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -30,9 +32,22 @@ public class People implements Serializable {
     @Column(name = "age")
     private int age;
 
-    @ManyToOne (fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private Address address;
+//    @ManyToOne (fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+//    @JoinColumn(name = "address_id")
+//
+private Set<Address> employeeSet = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "people_address", joinColumns = @JoinColumn(name = "people_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private Set<Address> addresses = new HashSet<>();
+
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
 
     public static List<People> createPeoples() {
         List<People> list = new ArrayList<>();

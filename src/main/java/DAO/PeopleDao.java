@@ -16,13 +16,27 @@ public class PeopleDao implements IPeopleDao {
     ConnectionResourceBundle connectionResourceBundle = new ConnectionResourceBundle();
 
     public int save(People people) throws SQLException {
-        String sql = "INSERT INTO test.people(name,surname,age,address_id) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO test.people(name,surname,age) VALUES(?,?,?)";
         PreparedStatement ps = connectionResourceBundle.getConnection().prepareStatement(sql);
         ps.setString(1, people.getName());
         ps.setString(2, people.getSurname());
         ps.setInt(3, people.getAge());
-        ps.setInt(4, people.getAddress().getId());
         return ps.executeUpdate();
+    }
+
+    public void addPeopleAddress(long people_id, long address_id) throws SQLException {
+        String sql = "INSERT  INTO test.people_address (people_id, address_id) " +
+                "SELECT p.id, a.id " +
+                "FROM people p, address a " +
+                "WHERE p.id = ? " +
+                "AND a.id = ?";
+        PreparedStatement preparedStatement = connectionResourceBundle.getConnection().prepareStatement(sql);
+        preparedStatement.setLong(1, people_id);
+        preparedStatement.setLong(2, address_id);
+        int rowsAdded = preparedStatement.executeUpdate();
+        if (rowsAdded > 0) {
+            System.out.println("Added successfully!");
+        }
     }
 
     public People get(Serializable id) throws SQLException {

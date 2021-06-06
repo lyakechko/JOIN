@@ -29,11 +29,24 @@ public class Address implements Serializable {
     @Column(name = "house")
     private int house;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "address")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "people_address", joinColumns = @JoinColumn(name = "address_id"),
+            inverseJoinColumns = @JoinColumn(name = "people_id"))
     private Set<People> peoples = new HashSet<>();
+//
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "address")
+//    private Set<People> peoples = new HashSet<>();
+
+
+    public Set<People> getPeoples() {
+        return peoples;
+    }
+
+    public void setPeoples(Set<People> peoples) {
+        this.peoples = peoples;
+    }
 
     public void addPeoples(People people) {
-        people.setAddress(this);
         this.peoples.add(people);
     }
 
