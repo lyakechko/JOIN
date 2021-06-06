@@ -1,0 +1,1 @@
+ALTER TABLE test.user RENAME User1;

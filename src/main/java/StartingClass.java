@@ -33,43 +33,34 @@ public class StartingClass {
         List<Address> addressList = Address.createAddress();
         PeopleDao peopleDao = new PeopleDao();
         AddressDao addressDao = new AddressDao();
-//
-//        //1 при помощи DAO создать 5 адресов и 5 человек.
-//        for (People people : peopleList) {
-//            peopleDao.save(people);
-//        }
-//        for (Address address : addressList) {
-//            addressDao.save(address);
-//        }
-//        AddressChanges.changesHouse(addressDao.getAllAddress()).forEach(e -> {
-//            try {
-//                addressDao.update(e);
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
-//        });
-//        //2 при помощи DAO увеличить на  в 2-ух последних адресов дом на 1 и у двух последних людей возраст на 2.
-//        PeopleChanges.changesAge(peopleDao.getAllPeoples()).forEach(e -> {
-//            try {
-//                peopleDao.update(e);
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
-//        });
 
+        //1 при помощи DAO создать 5 адресов и 5 человек.
+        for (People people : peopleList) {
+            peopleDao.save(people);
+        }
+        for (Address address : addressList) {
+            addressDao.save(address);
+        }
+        AddressChanges.changesHouse(addressDao.getAllAddress()).forEach(e -> {
+            try {
+                addressDao.update(e);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+        //2 при помощи DAO увеличить на  в 2-ух последних адресов дом на 1 и у двух последних людей возраст на 2.
+        PeopleChanges.changesAge(peopleDao.getAllPeoples()).forEach(e -> {
+            try {
+                peopleDao.update(e);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
 
-//            addressDao.delete(addressDao.getAllAddress().get(0).getId());
-//            peopleDao.delete(peopleDao.getAllPeoples().get(0).getId());
-//
+//       3 при помощи DAO удалить первый адрес и первого человека
+        addressDao.delete(addressDao.getAllAddress().get(0).getId());
+        peopleDao.delete(peopleDao.getAllPeoples().get(0).getId());
 
-        Address address = Address.builder().street("Ленина 34").house(14).build();
-        Serializable id = addressDao.save(address);
-        address.setId(addressDao.getAllAddress().get(addressDao.getAllAddress().size()-1).getId());
-
-        People people = People.builder().age(17).name("Ира").surname("Драгун").address(address).build();
-        People people1 = People.builder().age(17).name("Света").surname("Драгун").address(address).build();
-        peopleDao.save(people);
-        peopleDao.save(people1);
 
     }
 
