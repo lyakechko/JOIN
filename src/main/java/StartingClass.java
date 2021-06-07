@@ -4,9 +4,13 @@ import DBO.Address;
 import DBO.People;
 import DatabaseDataChanges.AddressChanges;
 import DatabaseDataChanges.PeopleChanges;
+import Database_Сalls.CreateQueryForDB;
+import Hibernate.HibernateUtil;
 
+import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,10 +33,10 @@ public class StartingClass {
      * //    В ветке JOIN_MANY_TO_MANY  доработать DAO и связи в таблице  где множестов адрессов могут принадлежать разным людям.
      */
     public static void main(String[] args) throws SQLException {
-        List<People> peopleList = People.createPeoples();
-        List<Address> addressList = Address.createAddress();
-        PeopleDao peopleDao = new PeopleDao();
-        AddressDao addressDao = new AddressDao();
+//        List<People> peopleList = People.createPeoples();
+//        List<Address> addressList = Address.createAddress();
+//        PeopleDao peopleDao = new PeopleDao();
+//        AddressDao addressDao = new AddressDao();
 //
 //        //1 при помощи DAO создать 5 адресов и 5 человек.
 //        for (People people : peopleList) {
@@ -56,20 +60,37 @@ public class StartingClass {
 //                throwables.printStackTrace();
 //            }
 //        });
-
-
+//
+//
 //            addressDao.delete(addressDao.getAllAddress().get(0).getId());
 //            peopleDao.delete(peopleDao.getAllPeoples().get(0).getId());
 //
+//
+//        Address address = Address.builder().street("Ленина 34").house(14).build();
+//        Serializable id = addressDao.save(address);
+//        address.setId(addressDao.getAllAddress().get(addressDao.getAllAddress().size()-1).getId());
+//
+//        People people = People.builder().age(17).name("Ира").surname("Драгун").address(address).build();
+//        People people1 = People.builder().age(17).name("Света").surname("Драгун").address(address).build();
+//        peopleDao.save(people);
+//        peopleDao.save(people1);
 
-        Address address = Address.builder().street("Ленина 34").house(14).build();
-        Serializable id = addressDao.save(address);
-        address.setId(addressDao.getAllAddress().get(addressDao.getAllAddress().size()-1).getId());
+//        EntityManager entityManager = HibernateUtil.getEm();
+//        System.out.println(entityManager.toString());
+//        String swl = "select * from %s";
+//        Address address = new Address();
+//        String sql = String.format(swl, address.getClass().getSimpleName());
+//        System.out.println(sql);
+        EntityManager entityManager = HibernateUtil.getEm();
+        entityManager.getTransaction().begin();
 
-        People people = People.builder().age(17).name("Ира").surname("Драгун").address(address).build();
-        People people1 = People.builder().age(17).name("Света").surname("Драгун").address(address).build();
-        peopleDao.save(people);
-        peopleDao.save(people1);
+        entityManager.persist(new People());
+        entityManager.getTransaction().commit();
+        People people = new People();
+        Address address = new Address();
+        CreateQueryForDB<People> createQueryForDBPeople = new CreateQueryForDB<>();
+        createQueryForDBPeople.executeResultSet(new String(""), people);
+        CreateQueryForDB<Address> createQueryForDBAddress = new CreateQueryForDB<>();
 
     }
 

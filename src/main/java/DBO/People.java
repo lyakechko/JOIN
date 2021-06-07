@@ -1,5 +1,6 @@
 package DBO;
 
+import UseAnnotations.ResultSetAnnotation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@ResultSetAnnotation
 @Data
 @Builder
 @NoArgsConstructor

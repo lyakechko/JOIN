@@ -1,5 +1,6 @@
 package DBO;
 
+import UseAnnotations.ResultSetAnnotation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,6 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "address")
 public class Address implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

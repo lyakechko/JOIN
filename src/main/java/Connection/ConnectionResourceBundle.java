@@ -6,7 +6,17 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ConnectionResourceBundle {
-    public Connection getConnection() throws SQLException {
+
+    public static Connection connection;
+
+    static {
+        try {
+            connection = ConnectionResourceBundle.getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public static Connection getConnection() throws SQLException {
         ResourceBundle resource = ResourceBundle.getBundle("dataBaseFile");
         String url = resource.getString("url");
         String driver = resource.getString("driver");
@@ -23,6 +33,5 @@ public class ConnectionResourceBundle {
             e.printStackTrace();
         }
         return DriverManager.getConnection(url, user, pass);
-
     }
 }
