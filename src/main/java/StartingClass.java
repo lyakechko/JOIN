@@ -5,6 +5,8 @@ import DBO.People;
 import DatabaseDataChanges.AddressChanges;
 import DatabaseDataChanges.PeopleChanges;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 public class StartingClass {
+
+
     /**
      * //    Реализовать для этих двух таблиц DTO и DAO.
      * //    С основной программы:
@@ -29,10 +33,14 @@ public class StartingClass {
      * //    В ветке JOIN_MANY_TO_MANY  доработать DAO и связи в таблице  где множестов адрессов могут принадлежать разным людям.
      */
     public static void main(String[] args) throws SQLException {
-        List<People> peopleList = People.createPeoples();
-        List<Address> addressList = Address.createAddress();
-        PeopleDao peopleDao = new PeopleDao();
-        AddressDao addressDao = new AddressDao();
+
+        EntityManager entityManager = HibernateEntityManager.getEntityManager();
+        entityManager.find(Address.class, 1L);
+
+//        List<People> peopleList = People.createPeoples();
+//        List<Address> addressList = Address.createAddress();
+//        PeopleDao peopleDao = new PeopleDao();
+//        AddressDao addressDao = new AddressDao();
 //
 //        //1 при помощи DAO создать 5 адресов и 5 человек.
 //        for (People people : peopleList) {
@@ -61,15 +69,15 @@ public class StartingClass {
 //            addressDao.delete(addressDao.getAllAddress().get(0).getId());
 //            peopleDao.delete(peopleDao.getAllPeoples().get(0).getId());
 //
-
-        Address address = Address.builder().street("Ленина 34").house(14).build();
-        Serializable id = addressDao.save(address);
-        address.setId(addressDao.getAllAddress().get(addressDao.getAllAddress().size()-1).getId());
-
-        People people = People.builder().age(17).name("Ира").surname("Драгун").address(address).build();
-        People people1 = People.builder().age(17).name("Света").surname("Драгун").address(address).build();
-        peopleDao.save(people);
-        peopleDao.save(people1);
+//
+//        Address address = Address.builder().street("Ленина 34").house(14).build();
+//        Serializable id = addressDao.save(address);
+//        address.setId(addressDao.getAllAddress().get(addressDao.getAllAddress().size() - 1).getId());
+//
+//        People people = People.builder().age(17).name("Ира").surname("Драгун").address(address).build();
+//        People people1 = People.builder().age(17).name("Света").surname("Драгун").address(address).build();
+//        peopleDao.save(people);
+//        peopleDao.save(people1);
 
     }
 

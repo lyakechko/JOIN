@@ -45,6 +45,10 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.4.31.Final</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.4.0.GA</version>
+        </dependency>
     </dependencies>
 </project>
