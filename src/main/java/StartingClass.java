@@ -1,18 +1,11 @@
-import DAO.AddressDao;
-import DAO.PeopleDao;
 import DBO.Address;
 import DBO.People;
-import DatabaseDataChanges.AddressChanges;
-import DatabaseDataChanges.PeopleChanges;
+import HibernateUtil.HibernateDao;
+import HibernateUtil.HibernateEntityManager;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class StartingClass {
 
@@ -34,11 +27,19 @@ public class StartingClass {
      */
     public static void main(String[] args) throws SQLException {
 
-        EntityManager entityManager = HibernateEntityManager.getEntityManager();
-        entityManager.find(Address.class, 1L);
+        //1 при помощи DAO создать 5 адресов и 5 человек.
+        HibernateDao.save(HibernateEntityManager.getEntityManager(), People.createPeoples());
+        HibernateDao.save(HibernateEntityManager.getEntityManager(), Address.createAddress());
 
-//        List<People> peopleList = People.createPeoples();
-//        List<Address> addressList = Address.createAddress();
+        //2 при помощи DAO увеличить на  в 2-ух последних адресов дом на 1 и у двух последних людей возраст на 2.
+        HibernateDao.updateLast2(HibernateEntityManager.getEntityManager());
+
+        //       3 при помощи DAO удалить первый адрес и первого человека
+
+
+        // entityManager.find(Address.class, 1L);
+
+
 //        PeopleDao peopleDao = new PeopleDao();
 //        AddressDao addressDao = new AddressDao();
 //
